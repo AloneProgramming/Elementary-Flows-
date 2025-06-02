@@ -7,10 +7,10 @@ y = np.linspace(-5, 5, 200)
 X, Y = np.meshgrid(x, y)
 
 # setting flow params
-U = 1.0          # uniform flow rate
+U = 1.0           # uniform flow rate
 Lambda = 15.0     # source/sink volume flow rate
-mu = 1.5         # doublet volume flow rate
-Gamma = 5.0     # vortex circulation rate
+mu = 1.5          # doublet volume flow rate
+Gamma = 5.0       # vortex circulation rate
 
 # defining fields
 psi = np.zeros_like(X)
