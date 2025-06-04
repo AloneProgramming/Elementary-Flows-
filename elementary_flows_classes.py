@@ -17,8 +17,9 @@ class FlowComponent:
         return X - self.dx, Y - self.dy
     
 class UniformFlow(FlowComponent):
-    def __init__(self, U, alpha=0, dx = 0, dy = 0):
-        super().__init__(U, dx, dy)
+    def __init__(self, strength, alpha=0, dx = 0, dy = 0):
+        super().__init__(self, dx, dy)
+        self.strength = strength
         self.alpha = alpha
 
     def velocity_field(self, X, Y):
@@ -135,9 +136,10 @@ class FlowModel:
 
 flow = FlowModel()
     
-flow.add_component(UniformFlow(U=3.0, alpha=np.radians(0))) 
-# flow.add_component(SourceSink(strength=-5.0, dx = 0.0, dy = 0.0))         
+flow.add_component(UniformFlow(strength=3.0, alpha=np.radians(0))) 
+flow.add_component(SourceSink(strength=5.0, dx = -3.0, dy = 0.0))  
+# flow.add_component(SourceSink(strength=5.0, dx = 3.0, dy = 0.0))   
 # flow.add_component(Vortex(strength=10.0))                  
-# flow.add_component(Doublet(strength=7.0))            #works weird       
+# flow.add_component(Doublet(strength=7.0))                 
     
 flow.plot(xlim=(-5, 5), ylim=(-5, 5), resolution=200)
