@@ -46,8 +46,8 @@ class Vortex(FlowComponent):
     def velocity_field(self, X, Y):
         X_shifted, Y_shifted = self._shifted_coordinates(X, Y)  
         r_sq = np.maximum(X_shifted**2 + Y_shifted**2, 1e-10)  
-        u = (self.strength / (2 * np.pi)) * (-Y_shifted) / r_sq
-        v = (self.strength / (2 * np.pi)) * X_shifted / r_sq
+        u = (self.strength / (2 * np.pi)) * Y_shifted / r_sq
+        v = (self.strength / (2 * np.pi)) * (-X_shifted) / r_sq
         return u, v
     
     def stream_function(self, X, Y):
@@ -134,8 +134,8 @@ class FlowModel:
             X, Y, pressure,
             cmap='jet',
             shading='auto',
-            #vmin=0
-            vmin=pressure.min(), 
+            vmin=90000,
+            #vmin=pressure.min(), 
             #vmax=150000,
             vmax=pressure.max()
         )
@@ -164,7 +164,7 @@ flow = FlowModel()
 flow.add_component(UniformFlow(strength=100.0, alpha=np.radians(0))) 
 # flow.add_component(SourceSink(strength=25.0, dx = 0.0, dy = 0.0))  
 # flow.add_component(SourceSink(strength=5.0, dx = 3.0, dy = 0.0))   
-# flow.add_component(Vortex(strength=150.0))                  
+flow.add_component(Vortex(strength=-150.0))                  
 # flow.add_component(Doublet(strength=7.0))                 
     
 flow.plot(xlim=(-5, 5), ylim=(-5, 5), resolution=200)

@@ -39,8 +39,8 @@ def source_sink(Lambda):
     return u, v, psi
 
 def vortex(Gamma):
-    u = (Gamma / (2 * np.pi)) * (-Y) / r_sq
-    v = (Gamma / (2 * np.pi)) * X / r_sq
+    u = (Gamma / (2 * np.pi)) * Y / r_sq
+    v = (Gamma / (2 * np.pi)) * (-X) / r_sq
     psi = (Gamma / (2 * np.pi)) * np.log(r)
     return u, v, psi
 
@@ -53,8 +53,8 @@ def doublet(mu):
 # flow superposition (uncomment ones you need)
 components = [
     uniform_flow(U),
-    source_sink(Lambda),
-    # vortex(Gamma),
+    # source_sink(Lambda),
+    vortex(Gamma),
     # doublet(mu)
 ]
 
