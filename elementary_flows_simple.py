@@ -7,10 +7,12 @@ y = np.linspace(-5, 5, 200)
 X, Y = np.meshgrid(x, y)
 
 # setting flow params
-U = 1.0           # uniform flow rate
-Lambda = 15.0     # source/sink volume flow rate
+U = 100.0         # uniform flow rate
+Lambda = 75.0     # source/sink volume flow rate
 mu = 1.5          # doublet volume flow rate
 Gamma = 5.0       # vortex circulation rate
+p0 = 101325.0     # free stream pressure
+rho = 1.225       # fluid density
 
 # defining fields
 psi = np.zeros_like(X)
@@ -63,6 +65,7 @@ for comp in components:
     psi += psi_comp
 
 speed = np.sqrt(u**2 + v**2)
+pressure = p0 + 0.5 * rho * (U**2 - speed**2)
 
 # visualization
 plt.figure(figsize=(14, 10))
@@ -75,7 +78,17 @@ speed_plot = plt.pcolormesh(
     vmin=0,             
     vmax=speed.max()    
 )
-plt.colorbar(speed_plot, label='Speed', shrink=0.8)
+# plt.colorbar(speed_plot, label='Speed', shrink=0.8)
+
+#pressure distribution
+pressure_plot = plt.pcolormesh(
+    X, Y, pressure,
+    cmap='jet',         
+    shading='auto',     
+    vmin=pressure.min(),             
+    vmax=pressure.max()    
+)
+plt.colorbar(pressure_plot, label='Pressure', shrink=0.8)
 
 # stream function
 streamlines = plt.contour(
