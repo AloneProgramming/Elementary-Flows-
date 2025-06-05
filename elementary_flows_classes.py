@@ -120,15 +120,15 @@ class FlowModel:
         
         plt.figure(figsize=(14, 10))
 
-#        speed_plot = plt.pcolormesh(
-#            X, Y, speed,
-#            cmap='jet',
-#            shading='auto',
-#            vmin=0,
-#            vmax=10,
-#            #vmax=speed.max()
-#        )
-#        plt.colorbar(speed_plot, label='Speed', shrink=0.8)
+        speed_plot = plt.pcolormesh(
+            X, Y, speed,
+            cmap='jet',
+            shading='auto',
+            vmin=0,
+            vmax=10,
+            #vmax=speed.max()
+        )
+        #plt.colorbar(speed_plot, label='Speed', shrink=0.8)
 
         pressure_plot = plt.pcolormesh(
             X, Y, pressure,
