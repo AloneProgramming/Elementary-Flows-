@@ -71,13 +71,13 @@ pressure = p0 + 0.5 * rho * (U**2 - speed**2)
 plt.figure(figsize=(14, 10))
 
 # velocity potential
-speed_plot = plt.pcolormesh(
-    X, Y, speed,
-    cmap='jet',         
-    shading='auto',     
-    vmin=0,             
-    vmax=speed.max()    
-)
+#speed_plot = plt.pcolormesh(
+#    X, Y, speed,
+#    cmap='jet',         
+#    shading='auto',     
+#    vmin=0,             
+#    vmax=speed.max()    
+#)
 # plt.colorbar(speed_plot, label='Speed', shrink=0.8)
 
 #pressure distribution
