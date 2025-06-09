@@ -104,9 +104,9 @@ class FlowModel:
                 v_inf += comp.strength * np.sin(comp.alpha)
 
         v0_inf = np.sqrt(u_inf**2 + v_inf**2)
-        pressure = p0 + 0.5 * rho * (v0_inf**2 - speed**2)
+        pressure_coef = 1.0 - (speed / v0_inf)**2
 
-        return pressure
+        return pressure_coef
     
     def plot(self, xlim=(-5, 5), ylim=(-5, 5), resolution=200):
         x = np.linspace(xlim[0], xlim[1], resolution)
@@ -116,7 +116,7 @@ class FlowModel:
         u, v = self.velocity_field(X, Y)
         psi = self.stream_function(X, Y)
         speed = np.sqrt(u**2 + v**2)
-        pressure = self.pressure_field(speed)
+        pressure_coef = self.pressure_field(speed)
         
         plt.figure(figsize=(14, 10))
 
@@ -125,19 +125,21 @@ class FlowModel:
         #    cmap='jet',
         #    shading='auto',
         #    vmin=0,
-        #    vmax=10,
-        #    #vmax=speed.max()
+        #    #vmax=10,
+        #    vmax=speed.max() 
         #)
         #plt.colorbar(speed_plot, label='Speed', shrink=0.8)
 
         pressure_plot = plt.pcolormesh(
-            X, Y, pressure,
+            X, Y, pressure_coef,
             cmap='jet',
             shading='auto',
-            vmin=90000,
-            vmax=pressure.max()
+            #vmin=pressure_coef.min(),
+            vmin = -5.0,
+            #vmax=pressure_coef.max()
+            vmax = 5.0,
         )
-        plt.colorbar(pressure_plot, label='Pressure', shrink=0.8)
+        plt.colorbar(pressure_plot, label='Cp', shrink=0.8)
         
         plt.contour(
             X, Y, psi,
@@ -159,10 +161,10 @@ class FlowModel:
 
 flow = FlowModel()
     
-flow.add_component(UniformFlow(strength=100.0, alpha=np.radians(0))) 
-# flow.add_component(SourceSink(strength=25.0, dx = 0.0, dy = 0.0))  
-# flow.add_component(SourceSink(strength=5.0, dx = 3.0, dy = 0.0))   
-flow.add_component(Vortex(strength=-150.0))                  
+flow.add_component(UniformFlow(strength=75.0, alpha=np.radians(0))) 
+#flow.add_component(SourceSink(strength=50.0, dx = -2.5, dy = 0.0))  
+#flow.add_component(SourceSink(strength=-50.0, dx = 2.5, dy = 0.0))   
+flow.add_component(Vortex(strength=150.0))                  
 # flow.add_component(Doublet(strength=7.0))                 
     
 flow.plot(xlim=(-5, 5), ylim=(-5, 5), resolution=200)
